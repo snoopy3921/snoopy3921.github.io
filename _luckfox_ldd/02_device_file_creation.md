@@ -7,6 +7,7 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
+nav_enabled: false
 ---
 ## 02 Device File Creation
 At the previous part we have registered a device with the kernel. So kernel can manage it, but in for a device the user want to control, we need to create a device file. 
@@ -38,7 +39,10 @@ Navigate to our board.
 crw-r--r--    1 root     root      242,   0 Mar  9 11:03 mam_dev
 ```
 
-To remove the device file, use the ``rm`` command. Note that the rmmod does not remove the device file.
+To remove the device file, use the ``rm`` command. 
+
+{: .note }
+The ``rmmod`` does not remove the device file.
 ```
 [root@luckfox root]# rmmod mam.ko
 [root@luckfox root]# ls -l /dev/ | grep mam
@@ -48,9 +52,12 @@ crw-r--r--    1 root     root      242,   0 Mar  9 11:03 mam_dev
 [root@luckfox root]#
 ```
 
-``Note:``
-+ Anyone can create the device file using this method.
-+ You can create the device file even before loading the driver.
+{: .note }
+Anyone can create the device file using this method.
+
+{: .note }
+You can create the device file even before loading the driver.
+
 
 #### Automatically using udev deamon
 

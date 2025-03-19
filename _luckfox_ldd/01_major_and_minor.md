@@ -7,6 +7,7 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
+nav_enabled: false
 ---
 ## 01 Major and minor
 
@@ -14,6 +15,10 @@ Devices when connect to linux system located in /dev. Linux treats devices as fi
 
 Each device file has its own major and minor number(device files are created by device drivers). The ``major number`` identifies the driver associated with the device, while the ``minor number`` is used to distinguish between different devices or instances of the same type managed by that driver.
 
+<center>
+<img src="/assets/images/major_and_minor.png" 
+alt="Luckfox pico ultra - Wifi version" />
+</center>
 
 ```
 +---------------------+

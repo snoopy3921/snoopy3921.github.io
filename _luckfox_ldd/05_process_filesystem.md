@@ -7,6 +7,7 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
+nav_enabled: false
 ---
 ## 05 Process filesystem
 Linux OS seperates memory into two parts: user space and kernel space. User space is where the application runs, and kernel space is where the OS runs. The kernel space is protected from user space by a mechanism called memory protection.
@@ -37,7 +38,8 @@ Here is some entry to retrieve info from kernel:
 
 ``procfs`` can also be used to read and modify kernel parameters at runtime through the ``/proc/sys`` directory. This allows for dynamic configuration of kernel settings without needing to reboot the system.
 
-```Note:``` Changes made to certain files in /proc/sys can affect system behavior immediately, so caution is advised when modifying these files.
+{: .warning }
+Changes made to certain files in /proc/sys can affect system behavior immediately, so caution is advised when modifying these files.
 
 ### Creating ``procfs`` directory
 Using this API, we can create a directory under ``/proc/``.

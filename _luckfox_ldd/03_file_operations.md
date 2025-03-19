@@ -7,6 +7,7 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
+nav_enabled: false
 ---
 ## 03 File operations
 So, our device file is created. To perform action on it like open, close, read, write. We need to register some structures to the driver.
@@ -14,7 +15,7 @@ So, our device file is created. To perform action on it like open, close, read, 
 Each device in the kernel is represented by a structure called ``file``(yes, our device file), which is defined in the file ``<linux/fs.h>``. This structure is used exclusively by the kernel and is never utilized by user-space applications. It is important to note that this is completely different from ``FILE``, which is defined by the ``glibc library`` and is not used anywhere in the kernel. The name of the structure can be misleading because it represents an abstraction of an open file, rather than a file on disk, which is represented by the ``inode`` structure.
 
 | Aspect  | file (Device Driver) |  FILE (glibc) |
-| ------------- | ------------- |  ------------- |
+|:-------------|:------------------|:------|
 | Context  | Kernel space (device interaction)  |  User space (file I/O operations)  |
 | Structure  | struct file (kernel structure)  |  FILE (glibc structure)  |
 | Purpose  | Represents device files for hardware access  |  Represents file streams for buffered I/O  |
@@ -36,7 +37,9 @@ Take a look at ``read()`` and ``write()`` operation:
 ssize_t (*read) (struct file *, char __user *, size_t, loff_t *);
 ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *);
 ```
-So note that the return type is ssize_t, not int.
+
+{: .note }
+The return type is ssize_t, not int.
 
 My code file the cdev is created statically. But you can create it dynamically by these APIs:
 ```c
