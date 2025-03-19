@@ -3,25 +3,22 @@ title: Snoopymeow's blog
 description: A starter template for a Jeykll site using the Just the Docs theme!
 theme: just-the-docs
 
+color_scheme: dark
+
 url: https://snoopy3921.github.io
 
 aux_links:
   "Github": "https://github.com/snoopy3921"
   "Youtube": "https://www.youtube.com/@Snoopymeow"
 
-
+nav_enabled: true
 
 # Define Jekyll collections
 collections:
-  # Define a collection named "tests", its documents reside in the "_tests" directory
-  tests:
-    permalink: "/_luckfox_ldd/"
+  luckfox_ldd:
+    permalink: "/:collection/:path/"
     output: true
-
 just_the_docs:
-  # Define which collections are used in just-the-docs
   collections:
-    # Reference the "tests" collection
-    tests:
-      # Give the collection a name
-      name: Tests
+    luckfox_ldd:
+      name: 
