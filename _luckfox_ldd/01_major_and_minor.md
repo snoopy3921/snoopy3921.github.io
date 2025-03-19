@@ -7,7 +7,6 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
-nav_enabled: false
 ---
 ## 01 Major and minor
 

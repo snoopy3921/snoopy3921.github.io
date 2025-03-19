@@ -7,7 +7,6 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
-nav_enabled: false
 ---
 ## 00 Our first driver
 Connect board to wifi: [Link](https://wiki.luckfox.com/Luckfox-Pico/Luckfox-Pico-Ultra-W-WIFI#wifi)

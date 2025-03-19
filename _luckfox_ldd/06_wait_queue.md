@@ -7,7 +7,6 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
-nav_enabled: false
 ---
 ## 06 Waitqueue
 We could have read and write to the driver already, but the CPU will not happy if we do read and write continously and not reasonally. Sometimes the device buffer is full and not ready to accept data or it is processing data and not ready to send. In such cases, driver should (by default) ``block`` the process,

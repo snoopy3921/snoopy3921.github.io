@@ -7,7 +7,6 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
-nav_enabled: false
 ---
 ## 02 Device File Creation
 At the previous part we have registered a device with the kernel. So kernel can manage it, but in for a device the user want to control, we need to create a device file. 

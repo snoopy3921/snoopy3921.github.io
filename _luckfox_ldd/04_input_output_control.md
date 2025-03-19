@@ -7,7 +7,6 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
-nav_enabled: false
 ---
 ## 04 Input Output Control
 Linux OS seperates memory into two parts: user space and kernel space. User space is where the application runs, and kernel space is where the OS runs. The kernel space is protected from user space by a mechanism called memory protection.

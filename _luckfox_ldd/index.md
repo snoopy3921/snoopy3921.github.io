@@ -7,10 +7,6 @@ has_toc: false
 # Luckfox_LDD
 Linux device driver on Luckfox pico ultra.
 
-{: .note }
-A paragraph
-
-
 <center>
 <img src="/assets/images/luckfox_board.png" 
 alt="Luckfox pico ultra - Wifi version" />

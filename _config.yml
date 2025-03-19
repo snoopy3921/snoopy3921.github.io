@@ -5,11 +5,14 @@ theme: just-the-docs
 
 color_scheme: dark
 
+# Set a path/url to a favicon that will be displayed by the browser
+favicon_ico: "/assets/images/dog_and_bird.ico"
+
+
 url: https://snoopy3921.github.io
 
 aux_links:
   "Github": "https://github.com/snoopy3921"
-  "Youtube": "https://www.youtube.com/@Snoopymeow"
 
 nav_enabled: true
 

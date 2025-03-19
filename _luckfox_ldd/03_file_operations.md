@@ -7,7 +7,6 @@ nav_exclude: false
 search_exclude: false
 has_children: false
 has_toc: false
-nav_enabled: false
 ---
 ## 03 File operations
 So, our device file is created. To perform action on it like open, close, read, write. We need to register some structures to the driver.
