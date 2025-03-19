@@ -1,13 +1,12 @@
-title: Snoopymeow's blog
+title: Ki's Embed Diary
 # logo: "/assets/images/dog_and_bird.png"
 description: A starter template for a Jeykll site using the Just the Docs theme!
 theme: just-the-docs
 
-color_scheme: dark
+color_scheme: light
 
 # Set a path/url to a favicon that will be displayed by the browser
 favicon_ico: "/assets/images/dog_and_bird.ico"
-
 
 url: https://snoopy3921.github.io
 
