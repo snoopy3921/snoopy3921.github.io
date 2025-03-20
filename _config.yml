@@ -20,10 +20,15 @@ collections:
   luckfox_ldd:
     permalink: "/:collection/:path/"
     output: true
+  100_years_of_solitude:
+    permalink: "/:collection/:path/"
+    output: true
 just_the_docs:
   collections:
     luckfox_ldd:
       name: 
+    100_years_of_solitude:
+      name:
     
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: true
