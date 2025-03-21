@@ -50,3 +50,66 @@ Most interrupts are maskable, which means we can temporarily postpone running th
 + ``Falts`` – Like Divide by zero, Page Fault, Segmentation Fault.
 + ``Traps`` – Reported immediately following the execution of the trapping instruction. Like Breakpoints.
 + ``Aborts`` – Aborts are used to report severe errors, such as hardware failures and invalid or inconsistent values in system tables.
+
+
+### Interrupt Handling
+For a device’s each interrupt, its device driver must register an interrupt handler.
+
+Interrupt handler is a funtion that is called by kernel when interrupt occurs.
+
+1. Each device that generates interrupts has an associated interrupt handler.
+2. The interrupt handler for a device is part of the device’s driver (the kernel code that manages the device).
+
+The hardware has to execute interrupt immediately, and programmer has to keep interrupt handler as short as possible.
+
+### Process Context and Interrupt Context
+The context is space where kernel do its job
+The Linux kernel uses these types of context:
++ Process contexts to handle system calls and manage user processes, allowing for blocking operations and scheduling. 
+In contrast
++ Interrupt contexts are used to handle hardware interrupts asynchronously, requiring quick, non-blocking execution. 
+
+So there restrictions on what can be done in interrupt, Code executing from interrupt context cannot do the following:
+1. Go to sleep or relinquish the processor
+2. Acquire a mutex
+3. Perform time-consuming tasks
+4. Access user space virtual memory
+
+And one more important thing: sometimes, when processing an interrupt job, that job can be lengthy and undeterministic. That is why a method called deferred interrupt is used in many RTOS platforms. But in Linux it has difference, the processing of interrupts is split into two parts or halves:
+
++ **Top halves**
++ **Bottom halves** ( This part, i think it is similar to deffered interrupt)
+
+{: .note }
+If the interrupt handler function could process and acknowledge interrupts within a few microseconds consistently, then absolutely there is no need for top half/bottom half delegation.
+
+### Top halves and Bottom halves
+
+#### **Top halves**
+The top halves is:
++ It truely is interrupt handler
++ Runs immediately on interrupt requests
++ Performs time-critical tasks, less comsuming tasks
+
+These are jobs that usually in top halves:
++ Acknowledging the Interrupt
++ Reading Status Registers
++ Updating Device State
++ Handling Simple Events
++ ...
+
+#### **Bottom halves**
+
+The bottom halves are used to processing what top halves wants it to complete the interrupt process. It is bassically task, that is "deffered" from top halves(interrup). 
+
+{: .note }
+Interrupts are enabled when a bottom half runs. The interrupt can be disabled if necessary, but generally, this should be avoided as this goes against the basic purpose of having a bottom half – processing data while listening to new interrupts. The bottom half runs in the future, at a more convenient time, with all interrupts enabled.
+
+There are 4 bottom half mechanisms are available in Linux:
+
++ **Workqueue**
++ **Threaded IRQs**
++ **Softirq**
++ **Tasklets**
+
+So these parts are for future, now we will working with how to handle interrupt with short action, therefor we currently dont need bottom halves.
