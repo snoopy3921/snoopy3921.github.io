@@ -113,3 +113,99 @@ There are 4 bottom half mechanisms are available in Linux:
 + **Tasklets**
 
 So these parts are for future, now we will working with how to handle interrupt with short action, therefor we currently dont need bottom halves.
+
+### Interrupt APIs
+Include ``<linux/interrupt.h>`` for using interrupts in linux driver.
+
+#### **request_irq**
+This api adds a handler for an interrupt line. This call allocates an interrupt and establishes a handler.
+```c
+int request_irq(unsigned int irq, irq_handler_t handler, unsigned long flags, const char *name, void *dev_id);
+```
++ ``irq``: IRQ number to allocate.
++ ``handler``: Interrupt handler function.This function will be invoked whenever the operating system receives the interrupt. The data type of return is ``irq_handler_t``: 
+	+ If its return value is ``IRQ_HANDLED``, it indicates that the processing is completed successfully, 
+	+ If the return value is ``IRQ_NONE``, the processing fails.
++ ``flags``: can be either zero or a bit mask of one or more of the flags defined in ``<linux/interrupt.h>``. The most important of these flags are (will be explained more):
+	+ ``IRQF_DISABLED``
+	+ ``IRQF_SAMPLE_RANDOM``
+	+ ``IRQF_SHARED``
+	+ ``IRQF_TIMER``
++ `name`: Used to identify the device name using this IRQ, for example, ``cat /proc/interrupts`` will list the IRQ number and device name.
++ `dev_id`: device using this interrupt. IRQ shared by many devices and this param allows the registration of an interrupt handler with a pointer to device-specific data. This enables the handler to access relevant information about the device that triggered the interrupt.
++ ``Return value``: returns zero on success and nonzero value indicates an error. A typical value is -EBUSY which means that the interrupt was already requested by another device driver.
+
+
+{: .note }
+```request_irq()``` cannot be called from interrupt context
+
+#### **free_irq**
+Parallel with ``request_irq``, ``free_irq`` releases an IRQ registered 
+```c
+void *free_irq(unsigned int irq, void *dev_id);
+```
++ ``irq``: IRQ number to free.
++ ``dev_id``: The last parameter of request_irq.
+
+If the specified interrupt line is not shared, this function removes the handler and disables the line.
+
+If the interrupt line is shared, the handler identified via dev_id is removed, but the interrupt line is disabled only when the last handler is removed. With shared interrupt lines, a unique cookie is required to differentiate between the multiple handlers that can exist on a single line and enable free_irq() to remove only the correct handler.
+
+In either case (shared or unshared), if dev_id is non-NULL, it must match the desired handler. A call to free_irq() must be made from process context.
+
+#### **enable_irq**
+Re-enable interrupt disabled by disable_irq or disable_irq_nosync.
+```c
+void enable_irq(unsigned int irq);
+```
+#### **disable_irq**
+Disable an IRQ from issuing an interrupt.
+```c
+void disable_irq(unsigned int irq);
+```
+#### **disable_irq_nosync**
+Disable an IRQ from issuing an interrupt, but wait until there is an interrupt handler being executed.
+```c
+void disable_irq_nosync(unsigned int irq);
+```
+#### **in_irq**
+Returns a non-zero value (true) if the current context is an interrupt context, and it returns zero (false) if it is not.
+```c
+#define in_irq()		(hardirq_count())
+```
+#### **in_interrupt**
+Returns a non-zero value (true) if the current context is an interrupt context or in process of bottom halves, and it returns zero (false) if it is not.
+```c
+#define in_interrupt()		(irq_count())
+```
+
+### Interrupts Flags
+These flags are passed to function request_irq() as second param, to specify behavior of interrupt handler.
+
++ ``IRQF_DISABLED`` : The interrupt handler is called with interrupts disabled.
++ ``IRQF_SHARED``: This flag specifies that the interrupt line can be shared among multiple interrupt handlers. Each handler registered on a given line must specify this flag. If this flag is not set, then if there is already a handler associated with the requested interrupt, the request for interrupt will fail because only one handler can exist per line.
++ ``IRQF_TIMER``: This flag specifies that this handler process interrupts the system timer.
++ ``IRQF_ONESHOT`` : Interrupt will be reactivated after running the process context routine; Without this flag, the interrupt will be reactivated after running the handler routine in the context of the interrupt.
+
+### IRQ line
+The available IRQ lines depend on the architecture and the interrupt controller being used.
+
+The board im using has SoC Rockchip RV1106 on it. According to document: 
+
+RV1106 provides a general interrupt controller (GIC) for CPU, which has 128 SPI (shared 
+peripheral interrupts) interrupt sources. The triggered type for each SPI interrupt is high 
+level sensitive, not programmable. 
+
+Among those 128 IRQ lines. It may be interesting to see which specific interrupt inside GIC [here](https://github.com/DeciHD/rockchip_docs/blob/main/rv1103_rv1106/Rockchip_RV1106_TRM_V0.3-Part1-20220324.pdf) at page 14. And check what ``/proc/interrupts`` shows:
+
+```
+[root@luckfox root]# cat /proc/interrupts | head -5
+           CPU0
+ 17:    1343380     GIC-0  29 Level     arch_timer
+ 18:          0     GIC-0  30 Level     arch_timer
+ 20:          0     GIC-0 157 Edge      debug-signal
+ 21:          0     GIC-0 118 Level     rknpor_powergood
+```
+
+First column is IRQ line(the lower, the higher prio), next is CPU core(RV1106 has 1 core), third is name of interrupt controller GIC, fourth is internal interrupt number of interrupt controller, fifth is name of driver.
+
