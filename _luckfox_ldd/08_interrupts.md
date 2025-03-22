@@ -209,3 +209,4 @@ Among those 128 IRQ lines. It may be interesting to see which specific interrupt
 
 First column is IRQ line(the lower, the higher prio), next is CPU core(RV1106 has 1 core), third is name of interrupt controller GIC, fourth is internal interrupt number of interrupt controller, fifth is name of driver.
 
+We will stop coding for a while and go next to GPIO part, to look at how to control GPIO basically like output, input and with input we can play with interrupt. 
