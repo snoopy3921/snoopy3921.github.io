@@ -125,6 +125,12 @@ struct device *device_create(struct *class, struct device *parent, dev_t devt, v
 void device_destroy (struct class * class, dev_t devt);
 ```
 
+{: .note }
+In case of multiple minors, ``device_create()`` and ``device_destroy()`` APIs may be put in for-loop, and the ``<device name format>`` string could be useful. For example, the ``device_create()`` call in a for-loop indexed by 'i' could be as follows:
+```c
+device_create(class, NULL, MKDEV(MAJOR(dev), MINOR(dev) + i), NULL, "my_dev%d", i);
+```
+
 ## Our code
 The code located in folder 02_device_file_creation
 ```bash
