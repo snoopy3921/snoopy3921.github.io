@@ -110,7 +110,7 @@ There are 4 bottom half mechanisms are available in Linux:
 + **Workqueue**
 + **Threaded IRQs**
 + **Softirq**
-+ **Tasklets**
++ **Tasklets** (deprecated)
 
 So these parts are for future, now we will working with how to handle interrupt with short action, therefor we currently dont need bottom halves.
 
