@@ -16,6 +16,11 @@ There are several ways of handling sleeping and waking up in Linux, each suited 
 
 The waitqueue is a queue that its elements is waitting :). 
 
+<center>
+<img src="/assets/images/wait_queue.png" />
+</center>
+[Image source](https://blog.csdn.net/q2519008/article/details/123816780)
+
 To make a process sleep, just put it into waitqueue. However, a couple of rules that you must keep in mind to be able to code sleeps in a safe manner(avoiding race condition):
 + Never sleep when you are running in an atomic context.
 
@@ -27,7 +32,7 @@ An atomic context is simply a state where multiple steps must be performed witho
 There are 3 important steps in Waitqueue:
 1. Initializing Waitqueue
 2. Queuing (Put the Task to sleep until the event comes)
-3.  Waking Up Queued Task
+3. Waking Up Queued Task
 
 Waitqueue is defined in ``<linux/wait.h>`` with a structure of
 type ``wait_queue_head_t``. A wait queue head can
