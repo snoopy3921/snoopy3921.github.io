@@ -23,11 +23,16 @@ collections:
   100_years_of_solitude:
     permalink: "/:collection/:path/"
     output: true
+  2_key_morse_pad:
+    permalink: "/:collection/:path/"
+    output: true
 just_the_docs:
   collections:
     luckfox_ldd:
       name: 
     100_years_of_solitude:
+      name:
+    2_key_morse_pad:
       name:
     
 # Makes Aux links open in a new tab. Default is false
