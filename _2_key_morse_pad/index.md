@@ -111,5 +111,6 @@ The most fun part seems to be designing the case for it.
 With the boot button at the bottom, we can reprogram it via bootloader.
 
 Demo
+<iframe width="480" height="720" src="https://www.youtube.com/embed/wLfgBXRENvs" frameborder="0" allow="autoplay" allowfullscreen></iframe>
 
 25/03/2025 
